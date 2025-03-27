@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  password  String   @db.VarChar(255)
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+model Admins {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  password  String   @db.VarChar(255)
+  email     String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("admins")
+}
+
+model Contents {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  topic     String   @db.VarChar(100)
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contents")
+}
+
+model Evens {
+  id        Int      @id @default(autoincrement())
+  adminId   Int      @map("admin_id")
+  title     String   @db.VarChar(100)
+  content   String
+  stareDate DateTime @default(now()) @map("start_date")
+  endDate   DateTime @default(now()) @map("end_date")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("evens")
+}
+
+model Checkins {
+  id        Int      @id @default(autoincrement())
+  eventID   Int      @map("event_id")
+  userID    Int      @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("checkins")
+}
+
+model PersonalToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  type      Role
+  token     String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("personal_token")
+}
+
+model SocailAccounts {
+  id             Int                    @id @default(autoincrement())
+  userId         Int                    @map("user_id")
+  email          String                 @db.VarChar(100)
+  provider       ProviderSocailAccounts
+  providerUserId String                 @map("provider_user_id")
+
+  @@map("socail_accounts")
+}
+
+enum Role {
+  user
+  admin
+}
+
+enum ProviderSocailAccounts {
+  google
+  apple
+}

@@ -1,0 +1,30 @@
+{
+  "name": "app-test",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "build:production": "bun build src/index.ts --target bun --outdir ./dist",
+    "start": "NODE_ENV=production bun dist/index.js"
+  },
+  "dependencies": {
+    "@prisma/client": "5.19.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@elysiajs/cors": "^1.1.1",
+    "@elysiajs/html": "^1.1.1",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@elysiajs/static": "^1.1.1",
+    "@elysiajs/swagger": "^1.1.5",
+    "elysia": "^1.1.23",
+    "jsonwebtoken": "^9.0.2",
+    "http-status": "^2.0.0",
+    "dotenv": "^16.4.5",
+    "prisma": "^5.22.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "bun-types": "latest"
+
+  },
+  "module": "src/index.js"
+}
